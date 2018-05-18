@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Nyheter for Marius!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/png" href="news.png"/>
+
+  </head>
+  <body>
+     <blockquote class="blockquote text-center" style="padding-top: 50px;">
+       <span class="span6 pull-left"><img src="news.png" class="img-fluid" style="height: 100px; width: 100px;" alt="Responsive image"></span>
+       <h1 class="display-2">Nyheter</h1>
+       <p>Nyheter fra VG, NRK og Dagbladet</p>
+     </blockquote>
+
+    <div class="row">
+
+
+      <div class="col-sm">
+        <blockquote class="blockquote text-center">
+         <p class="mb-0">Verdens Gang</p>
+        </blockquote>
+        <div id="vgfeed">
+        </div>
+      </div>
+
+    <div class="col-sm">
+      <blockquote class="blockquote text-center">
+       <p class="mb-0">Norsk Rikskringkasting</p>
+      </blockquote>
+      <div id="nrkfeed">
+      </div>
+    </div>
+
+    <div class="col-sm">
+      <blockquote class="blockquote text-center">
+       <p class="mb-0">Dagbladet</p>
+      </blockquote>
+      <div id="dbrss">
+      </div>
+    </div>
+
+    <div class="col-sm">
+      <blockquote class="blockquote text-center">
+       <p class="mb-0">Digi.no</p>
+      </blockquote>
+      <div id="digirss">
+      </div>
+    </div>
+
+    <div class="col-sm">
+      <blockquote class="blockquote text-center">
+       <p class="mb-0">Aftenposten</p>
+      </blockquote>
+      <div id="aftenpostenrss">
+      </div>
+    </div>
+
+    <div class="col-sm">
+      <blockquote class="blockquote text-center">
+        <div id="yttest">
+
+        </div>
+      </blockquote>
+    </div>
+  </div>
+
+  </div>
+  </body>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="js/FeedEk.js"></script>
+  <script type="text/javascript">
+    $('#vgfeed').FeedEk({
+      FeedUrl : 'https://www.vg.no/rss/feed/?categories=&keywords=&limit=10&format=rss',
+      MaxCount : 10,
+      ShowDesc : true,
+      ShowPubDate:true
+      });
+
+    $('#nrkfeed').FeedEk({
+      FeedUrl: 'http://www.nrk.no/toppsaker.rss',
+      MaxCount: 10,
+      ShowDesc: true,
+      ShowPubDate: true
+    });
+
+    $('#aftenpostenrss').FeedEk({
+      FeedUrl: 'https://www.aftenposten.no/rss/',
+      MaxCount: 10,
+      ShowDesc: true,
+      ShowPubDate: true
+    });
+
+    $('#digirss').FeedEk({
+      FeedUrl: 'https://www.digi.no/feeds/general.xml',
+      MaxCount: 10,
+      ShowDesc: true,
+      ShowPubDate: true
+    });
+
+    $('#dbrss').FeedEk({
+      FeedUrl: 'http://www.dagbladet.no/rss/',
+      MaxCount: 10,
+      ShowDesc: true,
+      ShowPubDate: true
+    });
+
+    function loadVideosJson(channelName, callback) {
+    $.getJSON("https://www.youtube.com/feeds/videos.xml?channel_id=UCBcRF18a7Qf58cCRy5xuWwQ", callback)
+}
+
+  function onVideoLoad(data) {
+      var entries = data.feed.entry;
+      for (i=0 ; i<entries.length; i++ ) {
+          //Title
+          console.log(data.feed.entry[i].title["$t"]);
+          //Video thumbnail
+          console.log(data.feed.entry[i].media$group.media$thumbnail[0].url);
+          //Like that you can parse through json to get different attributes of video.
+      }
+
+  }
+  //Call above functions using
+  loadVideosJson("bbc", onVideoLoad);
+
+  </script>
+</html>
